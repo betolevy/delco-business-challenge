@@ -4,6 +4,10 @@ import type { Question } from "@/lib/types";
  * The 15 Business Challenge cases. Content lives here as the source of
  * truth; edit via the Admin panel in production (writes go to the store,
  * not this file) — this is just what a fresh environment starts from.
+ *
+ * Wrong options are written to be plausible, not absurd — each one is a
+ * real misconception a founder might actually hold, so picking the right
+ * answer takes reasoning, not just eliminating the silly ones.
  */
 export const DEFAULT_QUESTIONS: Question[] = [
   {
@@ -16,14 +20,14 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Dos amigos crean una startup. Uno invierte el dinero; el otro desarrolla toda la tecnología. Nunca acuerdan quién será dueño del software.",
     prompt: "¿Qué problema podría aparecer si la empresa crece y luego deciden separarse?",
     options: [
-      { id: "a", label: "La empresa deja de existir." },
+      { id: "a", label: "El código quedará automáticamente a nombre de la empresa por estar constituida." },
       { id: "b", label: "El inversionista será automáticamente dueño del software." },
       { id: "c", label: "El desarrollador será automáticamente dueño del software." },
       { id: "d", label: "La propiedad del software podría convertirse en un conflicto." },
     ],
     correctOptionId: "d",
     explanation:
-      "La propiedad intelectual no debería asumirse. Debe quedar claramente definida desde el inicio.",
+      "La propiedad intelectual no debería asumirse. Debe quedar claramente definida desde el inicio, con un acuerdo de cesión de derechos.",
   },
   {
     id: "q2",
@@ -54,12 +58,12 @@ export const DEFAULT_QUESTIONS: Question[] = [
     prompt: "¿Qué error está cometiendo?",
     options: [
       { id: "a", label: "Debió registrar primero la sociedad." },
-      { id: "b", label: "Debió abrir primero una cuenta bancaria." },
+      { id: "b", label: "Haber usado la marca primero en el mercado ya le da protección legal suficiente." },
       { id: "c", label: "El dominio no protege legalmente la marca." },
       { id: "d", label: "Debió registrar primero el logo." },
     ],
     correctOptionId: "c",
-    explanation: "Comprar un dominio es importante, pero no reemplaza el registro de la marca.",
+    explanation: "Comprar un dominio (o ser el primero en usar la marca) es importante, pero no reemplaza el registro formal de la marca.",
   },
   {
     id: "q4",
@@ -72,12 +76,12 @@ export const DEFAULT_QUESTIONS: Question[] = [
     prompt: "¿Cuál es el mayor riesgo?",
     options: [
       { id: "a", label: "Uno podrá expulsar al otro." },
-      { id: "b", label: "La empresa cerrará automáticamente." },
+      { id: "b", label: "El accionista con más antigüedad tendrá el voto decisivo en caso de empate." },
       { id: "c", label: "Las decisiones importantes pueden quedar bloqueadas." },
-      { id: "d", label: "Ambos perderán sus acciones." },
+      { id: "d", label: "El gerente general podrá romper el empate por decreto." },
     ],
     correctOptionId: "c",
-    explanation: "Los mejores acuerdos entre socios se firman cuando todavía existe confianza.",
+    explanation: "Un 50/50 no tiene un desempate natural. Los mejores acuerdos entre socios se firman cuando todavía existe confianza.",
   },
   {
     id: "q5",
@@ -89,13 +93,13 @@ export const DEFAULT_QUESTIONS: Question[] = [
       'Un cliente te envía un contrato diciendo: "No te preocupes. Es el mismo contrato que firmamos con todos nuestros clientes."',
     prompt: "¿Qué sería un error asumir?",
     options: [
-      { id: "a", label: "Que será un contrato largo." },
+      { id: "a", label: "Que las cláusulas \"estándar\" no se pueden modificar." },
       { id: "b", label: "Que tendrá errores." },
       { id: "c", label: "Que ese contrato también protege tus intereses." },
-      { id: "d", label: "Que tendrá que firmarse en papel." },
+      { id: "d", label: "Que un abogado neutral ya lo revisó por ambas partes." },
     ],
     correctOptionId: "c",
-    explanation: 'Las cláusulas "estándar" suelen ser precisamente donde se distribuyen los riesgos.',
+    explanation: 'Las cláusulas "estándar" suelen ser precisamente donde se distribuyen los riesgos — y casi siempre se pueden negociar.',
   },
   {
     id: "q6",
@@ -106,13 +110,13 @@ export const DEFAULT_QUESTIONS: Question[] = [
     scenario: "Antes de explorar una posible alianza, dos empresas firman un NDA. Finalmente nunca hacen negocios.",
     prompt: "¿Qué obligación normalmente sigue vigente?",
     options: [
-      { id: "a", label: "Comprar los productos." },
+      { id: "a", label: "Formalizar la alianza en un plazo determinado." },
       { id: "b", label: "Mantener exclusividad." },
       { id: "c", label: "Negociar nuevamente." },
       { id: "d", label: "Proteger la información confidencial." },
     ],
     correctOptionId: "d",
-    explanation: "El NDA protege la información compartida, aunque nunca exista un contrato comercial.",
+    explanation: "El NDA protege la información compartida, aunque nunca exista un contrato comercial ni se llegue a un acuerdo.",
   },
   {
     id: "q7",
@@ -130,7 +134,7 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "Registro Público." },
     ],
     correctOptionId: "c",
-    explanation: "Un buen Due Diligence busca reducir sorpresas antes de invertir.",
+    explanation: "Un buen Due Diligence va más allá de los números o los registros públicos — busca reducir sorpresas antes de invertir.",
   },
   {
     id: "q8",
@@ -148,7 +152,7 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "Solo es válido si tiene firma digital." },
     ],
     correctOptionId: "c",
-    explanation: "Hoy muchas negociaciones se documentan electrónicamente. El contexto importa.",
+    explanation: "Hoy muchas negociaciones se documentan electrónicamente. El contexto (y lo que se dijo antes) importa más que el formato.",
   },
   {
     id: "q9",
@@ -160,13 +164,14 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Una empresa contrata a un desarrollador externo para crear toda su plataforma digital. Nunca acuerdan quién será dueño del código.",
     prompt: "¿Cuál es el mayor riesgo?",
     options: [
-      { id: "a", label: "Que la plataforma sea más lenta." },
-      { id: "b", label: "Que el proyecto cueste más." },
-      { id: "c", label: "Que el software no funcione." },
+      { id: "a", label: "Que el desarrollador pueda seguir usando ese código libremente en otros proyectos." },
+      { id: "b", label: "Que la empresa sea automáticamente dueña del código por haberlo pagado." },
+      { id: "c", label: "Que el desarrollador deba entregar el código fuente completo." },
       { id: "d", label: "Que nadie tenga claro quién es dueño del código." },
     ],
     correctOptionId: "d",
-    explanation: "El software suele ser uno de los activos más valiosos de una empresa.",
+    explanation:
+      "Pagar por el desarrollo no transfiere automáticamente la propiedad del código — se necesita un acuerdo escrito de cesión de derechos. El software suele ser uno de los activos más valiosos de una empresa.",
   },
   {
     id: "q10",
@@ -177,13 +182,13 @@ export const DEFAULT_QUESTIONS: Question[] = [
     scenario: "Una empresa usa inteligencia artificial para preparar todos sus contratos sin revisarlos.",
     prompt: "¿Cuál es el riesgo más importante?",
     options: [
-      { id: "a", label: "Que sean demasiado largos." },
-      { id: "b", label: "Que sean demasiado cortos." },
-      { id: "c", label: "Que no tengan formato profesional." },
+      { id: "a", label: "Que no cumplan con el formato exigido por las autoridades locales." },
+      { id: "b", label: "Que tarden más en generarse que si los redactara un abogado." },
+      { id: "c", label: "Que no puedan firmarse electrónicamente." },
       { id: "d", label: "Que no reflejen correctamente el negocio que quieren proteger." },
     ],
     correctOptionId: "d",
-    explanation: "La IA ayuda mucho, pero cada operación tiene riesgos propios.",
+    explanation: "La IA ayuda mucho a redactar más rápido, pero cada operación tiene riesgos propios que un modelo genérico puede pasar por alto sin revisión humana.",
   },
   {
     id: "q11",
@@ -198,7 +203,7 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "a", label: "Un aumento de capital." },
       { id: "b", label: "Un plan de vesting." },
       { id: "c", label: "Una junta extraordinaria." },
-      { id: "d", label: "Un aumento de sueldo." },
+      { id: "d", label: "Una cláusula de no competencia." },
     ],
     correctOptionId: "b",
     explanation:
@@ -213,13 +218,13 @@ export const DEFAULT_QUESTIONS: Question[] = [
     scenario: "Uno de los socios quiere vender todas sus acciones a un competidor.",
     prompt: "¿Qué mecanismo suele proteger primero a los demás socios?",
     options: [
-      { id: "a", label: "NDA." },
-      { id: "b", label: "Patente." },
+      { id: "a", label: "Cláusula de arrastre (drag-along)." },
+      { id: "b", label: "Cláusula de no competencia." },
       { id: "c", label: "Derecho de preferencia." },
-      { id: "d", label: "Licencia comercial." },
+      { id: "d", label: "Cláusula de exclusividad." },
     ],
     correctOptionId: "c",
-    explanation: "Muchos acuerdos permiten que los socios existentes tengan la primera oportunidad de comprar.",
+    explanation: "El derecho de preferencia permite que los socios existentes tengan la primera oportunidad de comprar, antes de que entre un tercero.",
   },
   {
     id: "q13",
@@ -230,13 +235,13 @@ export const DEFAULT_QUESTIONS: Question[] = [
     scenario: "Una empresa abrirá operaciones en tres países usando la misma marca.",
     prompt: "¿Qué debería revisar antes del lanzamiento?",
     options: [
-      { id: "a", label: "El tamaño del mercado." },
-      { id: "b", label: "El tipo de cambio." },
+      { id: "a", label: "Si necesitan constituir una nueva sociedad en cada país para poder usar la marca." },
+      { id: "b", label: "Si deben traducir el nombre de la marca a cada idioma local." },
       { id: "c", label: "Si la marca puede protegerse en esos países." },
       { id: "d", label: "El costo de registrar la sociedad." },
     ],
     correctOptionId: "c",
-    explanation: "Una marca disponible en un país puede pertenecer a otra empresa en otro.",
+    explanation: "Una marca disponible en un país puede pertenecer a otra empresa en otro — el registro de marca es territorial, no automático.",
   },
   {
     id: "q14",
@@ -251,10 +256,10 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "a", label: "Pagar más impuestos." },
       { id: "b", label: "Que la compra demore más." },
       { id: "c", label: "Descubrir problemas importantes cuando ya sea demasiado tarde." },
-      { id: "d", label: "Que la empresa tenga más empleados de lo esperado." },
+      { id: "d", label: "Que el vendedor deba devolver el dinero si algo sale mal después." },
     ],
     correctOptionId: "c",
-    explanation: "La confianza es importante. La verificación también.",
+    explanation: "La confianza es importante. La verificación también — sin un buen respaldo contractual, no hay garantía de que algo se pueda revertir después del cierre.",
   },
   {
     id: "q15",
@@ -266,10 +271,10 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Una empresa factura a través de varias entidades relacionadas sin ninguna asesoría fiscal, buscando ahorrarse el costo de un consultor.",
     prompt: "¿Cuál es el mayor riesgo de operar así, sin planificación fiscal adecuada?",
     options: [
-      { id: "a", label: "Que las facturas se demoren más." },
+      { id: "a", label: "Que paguen menos impuestos de lo normal, sin ningún riesgo adicional." },
       { id: "b", label: "Pagar más impuestos de los necesarios o enfrentar contingencias fiscales." },
-      { id: "c", label: "Que necesiten más empleados." },
-      { id: "d", label: "Que la marca pierda valor." },
+      { id: "c", label: "Que el banco les exija más documentación para abrir cuentas." },
+      { id: "d", label: "Que deban cambiar de contador cada año por ley." },
     ],
     correctOptionId: "b",
     explanation:

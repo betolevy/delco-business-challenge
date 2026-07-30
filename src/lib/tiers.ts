@@ -3,14 +3,15 @@ export type Tier = {
   emoji: string;
 };
 
-// Ratio thresholds tuned for a 15-question challenge (14–15, 11–13, 8–10,
-// 5–7, 0–4) but expressed as fractions so they scale if the question
-// count ever changes.
+// Ratio thresholds tuned for a 15-question challenge (12–15, 9–11, 6–8,
+// 3–5, 0–2) but expressed as fractions so they scale if the question
+// count ever changes. Lowered from the original (14–15, 11–13, 8–10, 5–7)
+// after tightening the wrong-answer options made the questions harder.
 const TIERS: (Tier & { minRatio: number })[] = [
-  { label: "Boardroom Master", emoji: "🏆", minRatio: 14 / 15 },
-  { label: "Deal Maker", emoji: "🥇", minRatio: 11 / 15 },
-  { label: "Business Builder", emoji: "🚀", minRatio: 8 / 15 },
-  { label: "Future Founder", emoji: "💼", minRatio: 5 / 15 },
+  { label: "Boardroom Master", emoji: "🏆", minRatio: 12 / 15 },
+  { label: "Deal Maker", emoji: "🥇", minRatio: 9 / 15 },
+  { label: "Business Builder", emoji: "🚀", minRatio: 6 / 15 },
+  { label: "Future Founder", emoji: "💼", minRatio: 3 / 15 },
   { label: "Getting Started", emoji: "🌱", minRatio: 0 },
 ];
 
