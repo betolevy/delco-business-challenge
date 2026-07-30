@@ -1,65 +1,82 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { Logo } from "@/components/Logo";
+import { QrCode } from "@/components/QrCode";
+
+// Placeholder tagline — swap for whatever line delco wants to lead with.
+const TAGLINE = "Can you make the right business decisions?";
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 export default function Home() {
+  const router = useRouter();
+  const [origin] = useState(() => (typeof window !== "undefined" ? window.location.origin : ""));
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <motion.button
+      type="button"
+      onClick={() => router.push("/challenge")}
+      whileTap={{ scale: 0.99 }}
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden px-6 py-16 text-left cursor-pointer"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 50% 30%, rgba(0,47,135,0.28) 0%, rgba(10,10,10,0) 70%)",
+        }}
+      />
+
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative flex w-full max-w-md flex-col items-center text-center"
+      >
+        <motion.div variants={item}>
+          <Logo variant="light" className="h-14 w-auto md:h-16" />
+        </motion.div>
+
+        <motion.h1
+          variants={item}
+          className="mt-9 text-[40px] font-bold leading-[1.05] tracking-tight md:text-[48px]"
+        >
+          Business Challenge
+        </motion.h1>
+
+        <motion.p variants={item} className="mt-4 max-w-xs text-[18px] font-medium text-fg-muted">
+          {TAGLINE}
+        </motion.p>
+
+        <motion.div
+          variants={item}
+          className="mt-16 animate-pulse text-[13px] font-medium uppercase tracking-wide text-fg-subtle"
+        >
+          Tap anywhere to begin
+        </motion.div>
+
+        {origin && (
+          <motion.div
+            variants={item}
+            className="mt-16 hidden flex-col items-center gap-3 md:flex"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <QrCode url={`${origin}/challenge`} size={112} />
+            <span className="text-xs text-fg-subtle">Scan to play on your phone</span>
+          </motion.div>
+        )}
+      </motion.div>
+    </motion.button>
   );
 }
