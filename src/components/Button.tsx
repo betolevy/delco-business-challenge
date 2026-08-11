@@ -12,7 +12,7 @@ type ButtonProps = HTMLMotionProps<"button"> & {
 
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary: "bg-white text-black hover:bg-white/90",
-  secondary: "bg-navy text-white hover:bg-navy-light",
+  secondary: "bg-surface text-fg border border-teal/40 hover:border-teal",
   ghost: "bg-transparent text-white border border-border-strong hover:bg-white/5",
 };
 

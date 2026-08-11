@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getQuestions, addLeaderboardEntry, computePercentile } from "@/lib/store";
-import { scoreAnswers, type AnswerInput } from "@/lib/scoring";
+import { scoreAnswers, buildRecap, type AnswerInput } from "@/lib/scoring";
+import { getTier } from "@/lib/tiers";
+import { sendResultsEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -40,6 +42,16 @@ export async function POST(request: Request) {
     totalQuestions,
     timeMs,
   });
+
+  const tier = getTier(score, totalQuestions);
+  const recap = buildRecap(questions, answers);
+
+  // Best-effort: never let a flaky email provider block someone from joining the leaderboard.
+  try {
+    await sendResultsEmail({ to: email, name, score, totalQuestions, percentile, tier, recap });
+  } catch (err) {
+    console.error("Failed to send results email", err);
+  }
 
   return NextResponse.json({
     score,

@@ -1,9 +1,10 @@
 import type { Question } from "@/lib/types";
 
 /**
- * The 15 Business Challenge cases. Content lives here as the source of
- * truth; edit via the Admin panel in production (writes go to the store,
- * not this file) — this is just what a fresh environment starts from.
+ * The 12 Business Challenge cases (3 per section). Content lives here as
+ * the source of truth; edit via the Admin panel in production (writes go
+ * to the store, not this file) — this is just what a fresh environment
+ * starts from.
  *
  * Wrong options are written to be plausible, not absurd — each one is a
  * real misconception a founder might actually hold, so picking the right
@@ -34,24 +35,6 @@ export const DEFAULT_QUESTIONS: Question[] = [
     order: 2,
     section: "BUILD A BUSINESS",
     sectionEmoji: "🚀",
-    caseTitle: "The Investor",
-    scenario: "Una startup recibe una inversión. El inversionista comprará solo el 15% de la empresa.",
-    prompt: "¿Qué documento suele definir mejor los derechos que tendrá ese inversionista?",
-    options: [
-      { id: "a", label: "El certificado de acciones." },
-      { id: "b", label: "Los estatutos de la sociedad." },
-      { id: "c", label: "El acuerdo entre accionistas." },
-      { id: "d", label: "El pacto de confidencialidad." },
-    ],
-    correctOptionId: "c",
-    explanation:
-      "Muchos derechos importantes se negocian entre los socios, independientemente del porcentaje accionario.",
-  },
-  {
-    id: "q3",
-    order: 3,
-    section: "BUILD A BUSINESS",
-    sectionEmoji: "🚀",
     caseTitle: "The Brand",
     scenario:
       "Una empresa registra inmediatamente su dominio web, lanza su página y empieza a vender. Nunca registra la marca.",
@@ -66,8 +49,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "Comprar un dominio (o ser el primero en usar la marca) es importante, pero no reemplaza el registro formal de la marca.",
   },
   {
-    id: "q4",
-    order: 4,
+    id: "q3",
+    order: 3,
     section: "BUILD A BUSINESS",
     sectionEmoji: "🚀",
     caseTitle: "The 50/50",
@@ -84,8 +67,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "Un 50/50 no tiene un desempate natural. Los mejores acuerdos entre socios se firman cuando todavía existe confianza.",
   },
   {
-    id: "q5",
-    order: 5,
+    id: "q4",
+    order: 4,
     section: "MAKE THE DEAL",
     sectionEmoji: "🤝",
     caseTitle: "The Standard Contract",
@@ -102,25 +85,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: 'Las cláusulas "estándar" suelen ser precisamente donde se distribuyen los riesgos — y casi siempre se pueden negociar.',
   },
   {
-    id: "q6",
-    order: 6,
-    section: "MAKE THE DEAL",
-    sectionEmoji: "🤝",
-    caseTitle: "The NDA",
-    scenario: "Antes de explorar una posible alianza, dos empresas firman un NDA. Finalmente nunca hacen negocios.",
-    prompt: "¿Qué obligación normalmente sigue vigente?",
-    options: [
-      { id: "a", label: "Formalizar la alianza en un plazo determinado." },
-      { id: "b", label: "Mantener exclusividad." },
-      { id: "c", label: "Negociar nuevamente." },
-      { id: "d", label: "Proteger la información confidencial." },
-    ],
-    correctOptionId: "d",
-    explanation: "El NDA protege la información compartida, aunque nunca exista un contrato comercial ni se llegue a un acuerdo.",
-  },
-  {
-    id: "q7",
-    order: 7,
+    id: "q5",
+    order: 5,
     section: "MAKE THE DEAL",
     sectionEmoji: "🤝",
     caseTitle: "The Surprise",
@@ -137,8 +103,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "Un buen Due Diligence va más allá de los números o los registros públicos — busca reducir sorpresas antes de invertir.",
   },
   {
-    id: "q8",
-    order: 8,
+    id: "q6",
+    order: 6,
     section: "MAKE THE DEAL",
     sectionEmoji: "🤝",
     caseTitle: "The Million-Dollar Email",
@@ -155,8 +121,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "Hoy muchas negociaciones se documentan electrónicamente. El contexto (y lo que se dijo antes) importa más que el formato.",
   },
   {
-    id: "q9",
-    order: 9,
+    id: "q7",
+    order: 7,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The Developer",
@@ -174,8 +140,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Pagar por el desarrollo no transfiere automáticamente la propiedad del código — se necesita un acuerdo escrito de cesión de derechos. El software suele ser uno de los activos más valiosos de una empresa.",
   },
   {
-    id: "q10",
-    order: 10,
+    id: "q8",
+    order: 8,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The AI Assistant",
@@ -191,8 +157,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "La IA ayuda mucho a redactar más rápido, pero cada operación tiene riesgos propios que un modelo genérico puede pasar por alto sin revisión humana.",
   },
   {
-    id: "q11",
-    order: 11,
+    id: "q9",
+    order: 9,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The Early Exit",
@@ -210,8 +176,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "El vesting hace que las acciones se ganen gradualmente con el tiempo, protegiendo a la empresa si un socio se va temprano.",
   },
   {
-    id: "q12",
-    order: 12,
+    id: "q10",
+    order: 10,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Competitor",
@@ -227,8 +193,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "El derecho de preferencia permite que los socios existentes tengan la primera oportunidad de comprar, antes de que entre un tercero.",
   },
   {
-    id: "q13",
-    order: 13,
+    id: "q11",
+    order: 11,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Expansion",
@@ -244,26 +210,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
     explanation: "Una marca disponible en un país puede pertenecer a otra empresa en otro — el registro de marca es territorial, no automático.",
   },
   {
-    id: "q14",
-    order: 14,
-    section: "PROTECT YOUR COMPANY",
-    sectionEmoji: "🛡️",
-    caseTitle: "The Shortcut",
-    scenario:
-      "El comprador decide adquirir una empresa sin revisar contratos, permisos ni litigios porque confía plenamente en el vendedor.",
-    prompt: "¿Cuál es el mayor riesgo?",
-    options: [
-      { id: "a", label: "Pagar más impuestos." },
-      { id: "b", label: "Que la compra demore más." },
-      { id: "c", label: "Descubrir problemas importantes cuando ya sea demasiado tarde." },
-      { id: "d", label: "Que el vendedor deba devolver el dinero si algo sale mal después." },
-    ],
-    correctOptionId: "c",
-    explanation: "La confianza es importante. La verificación también — sin un buen respaldo contractual, no hay garantía de que algo se pueda revertir después del cierre.",
-  },
-  {
-    id: "q15",
-    order: 15,
+    id: "q12",
+    order: 12,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Structure",

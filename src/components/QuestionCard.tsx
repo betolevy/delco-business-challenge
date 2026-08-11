@@ -24,9 +24,14 @@ export function QuestionCard({ question, selectedOptionId, onSelect }: Props) {
         Case {question.order} — {question.caseTitle}
       </div>
 
-      <p className="text-[15px] leading-relaxed text-fg-muted">{question.scenario}</p>
+      <div className="rounded-2xl border border-teal/25 bg-teal/5 px-4 py-3.5">
+        <div className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-teal">
+          The situation
+        </div>
+        <p className="text-[16px] leading-relaxed text-fg">{question.scenario}</p>
+      </div>
 
-      <h2 className="text-balance text-[22px] font-semibold leading-snug tracking-tight md:text-[26px]">
+      <h2 className="mt-1 text-balance text-[20px] font-semibold leading-snug tracking-tight md:text-[24px]">
         {question.prompt}
       </h2>
 

@@ -1,6 +1,6 @@
 # Business Challenge — delco
 
-A kiosk-friendly PWA for Penta Summit: a 15-case business-decision simulation with a
+A kiosk-friendly PWA for Penta Summit: a 12-case business-decision simulation with a
 hidden score (revealed only at the end), a tier badge, an end-of-quiz recap, a
 leaderboard, and a hidden admin panel — built with Next.js, Tailwind, and Framer Motion.
 
@@ -30,6 +30,8 @@ Open http://localhost:3000. `/challenge` is the quiz, `/leaderboard` is public,
 5. **Recap** — every case, your answer, the correct answer, and the explanation — this is
    where the "what you should know" legal content actually gets read.
 6. **Join Leaderboard** — name / company / email, styled as an app step, not a form.
+   Submitting also emails the player their score, tier, and full case-by-case recap
+   (best-effort — see Email below).
 
 ## Environment variables
 
@@ -41,6 +43,12 @@ See `.env.example`. Required:
 Optional (**required before deploying to Vercel** — see below):
 
 - `KV_REST_API_URL` / `KV_REST_API_TOKEN` — Vercel KV / Upstash Redis REST credentials.
+
+Optional (results email):
+
+- `RESEND_API_KEY` — from resend.com. Unset = email sending is skipped silently.
+- `RESEND_FROM_EMAIL` — defaults to `info@delcolaw.com` (domain must be verified in Resend).
+- `NEXT_PUBLIC_SITE_URL` — used for the logo image and leaderboard link inside the email.
 
 ## Data storage
 
@@ -56,14 +64,14 @@ Questions and leaderboard entries live behind `src/lib/store.ts`:
 **Before the event, add Vercel KV (or point these env vars at an Upstash Redis
 database) so leaderboard entries actually persist.**
 
-## Editing the 15 cases
+## Editing the 12 cases
 
 The real cases ship in `src/data/questions.default.ts` — edit them from the Admin panel
 (`/admin` → Questions tab) instead: each case has an emoji + section, case title,
 scenario, question, options, correct answer, and an explanation (shown in the recap, not
 during play). No redeploy needed; changes write straight to the store above.
 
-Score tiers assume 15 questions total (see the ratio thresholds in `src/lib/tiers.ts`) —
+Score tiers assume 12 questions total (see the ratio thresholds in `src/lib/tiers.ts`) —
 update those if the case count changes materially.
 
 ## Brand assets
@@ -72,6 +80,15 @@ update those if the case count changes materially.
 as vector paths from the official brand files (Pantone 287 C / `#002F87`). See
 `public/logo/README.md` for details and how to regenerate the PWA icons if the mark ever
 changes.
+
+## Email results
+
+`src/lib/email.ts` sends a results email via [Resend](https://resend.com) when someone
+joins the leaderboard (`src/app/api/submit/route.ts`) — score, tier badge, and the same
+case-by-case recap shown on screen. It's best-effort: a failed send is logged but never
+blocks the leaderboard join. Without `RESEND_API_KEY` set, sending is skipped entirely
+(no error). The `from` address requires the sending domain to be verified in Resend
+(Dashboard → Domains → add the DNS records it gives you).
 
 ## Kiosk mode (iPad)
 

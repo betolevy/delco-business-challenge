@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-bg text-fg selection:bg-navy-light">
+      <body className="min-h-full flex flex-col bg-bg text-fg selection:bg-teal">
         <ServiceWorkerRegister />
         <KioskIdleReset />
         {children}

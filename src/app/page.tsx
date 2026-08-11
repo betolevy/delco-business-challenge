@@ -35,7 +35,7 @@ export default function Home() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 30%, rgba(0,47,135,0.28) 0%, rgba(10,10,10,0) 70%)",
+            "radial-gradient(60% 50% at 50% 30%, rgba(0,188,180,0.10) 0%, rgba(10,10,10,0) 70%)",
         }}
       />
 

@@ -10,8 +10,6 @@
   --color-fg-muted: #a1a1a1;
   --color-fg-subtle: #6b6b6b;
 
-  --color-navy: #002f87;
-  --color-navy-light: #1c4fb0;
   --color-teal: #00bcb4;
 
   --color-success: #22c55e;
@@ -27,8 +25,6 @@
   --color-fg: var(--color-fg);
   --color-fg-muted: var(--color-fg-muted);
   --color-fg-subtle: var(--color-fg-subtle);
-  --color-navy: var(--color-navy);
-  --color-navy-light: var(--color-navy-light);
   --color-teal: var(--color-teal);
   --color-success: var(--color-success);
   --color-error: var(--color-error);
@@ -55,8 +51,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-navy-light);
-  color: #fff;
+  background: var(--color-teal);
+  color: #0a0a0a;
 }
 
 @keyframes fade-in {

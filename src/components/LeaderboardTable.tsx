@@ -38,7 +38,7 @@ export function LeaderboardTable({ entries }: { entries: PublicLeaderboardEntry[
                 "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold",
                 rank === 1 && "bg-teal text-black",
                 rank === 2 && "bg-white/80 text-black",
-                rank === 3 && "bg-navy-light text-white",
+                rank === 3 && "bg-white/20 text-white",
                 rank > 3 && "bg-white/5 text-fg-subtle"
               )}
             >
