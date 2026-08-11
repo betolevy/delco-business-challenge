@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -14,6 +14,7 @@ import { StatPill } from "@/components/StatPill";
 import type { PublicQuestion } from "@/lib/types";
 import type { RecapItem } from "@/lib/scoring";
 import type { Tier } from "@/lib/tiers";
+import { saveProgress, loadProgress, clearProgress, matchesQuestionSet } from "@/lib/progress";
 
 type Answer = { questionId: string; optionId: string };
 type Phase = "cover" | "loading" | "playing" | "scoring" | "result" | "recap" | "join" | "done";
@@ -41,12 +42,45 @@ export default function ChallengePage() {
   const answersRef = useRef<Answer[]>([]);
   const startedAtRef = useRef<number>(0);
 
+  // Phones drop tabs from memory when backgrounded — resume an in-flight
+  // run instead of dumping the player back at the start screen.
+  useEffect(() => {
+    const saved = loadProgress();
+    if (!saved) return;
+
+    let cancelled = false;
+    (async () => {
+      const res = await fetch("/api/questions");
+      const data: { questions: PublicQuestion[] } = await res.json();
+      if (cancelled) return;
+
+      const ids = data.questions.map((q) => q.id);
+      if (!matchesQuestionSet(saved, ids) || saved.index >= data.questions.length) {
+        clearProgress();
+        return;
+      }
+
+      answersRef.current = saved.answers;
+      startedAtRef.current = saved.startedAt;
+      setQuestions(data.questions);
+      setIndex(saved.index);
+      setPhase("playing");
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   async function startChallenge() {
     setPhase("loading");
     const res = await fetch("/api/questions");
     const data: { questions: PublicQuestion[] } = await res.json();
     setQuestions(data.questions);
     startedAtRef.current = Date.now();
+    answersRef.current = [];
+    clearProgress();
+    setIndex(0);
     setPhase("playing");
   }
 
@@ -57,6 +91,15 @@ export default function ChallengePage() {
     if (!current || selectedOptionId) return;
     setSelectedOptionId(optionId);
     answersRef.current = [...answersRef.current, { questionId: current.id, optionId }];
+
+    if (!isLastQuestion) {
+      saveProgress({
+        startedAt: startedAtRef.current,
+        index: index + 1,
+        answers: answersRef.current,
+        questionIds: questions.map((q) => q.id),
+      });
+    }
 
     setTimeout(() => {
       if (isLastQuestion) {
@@ -69,6 +112,7 @@ export default function ChallengePage() {
   }
 
   async function finishQuiz() {
+    clearProgress();
     setPhase("scoring");
     const res = await fetch("/api/score", {
       method: "POST",
