@@ -184,12 +184,12 @@ export default function ChallengePage() {
                 Build your business
               </h1>
               <p className="mt-2 max-w-xs text-[15px] text-fg-muted">
-                12 real-world cases, one decision at a time. Answer honestly — your score is
+                15 real-world cases, one decision at a time. Answer honestly — your score is
                 revealed at the end.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-                <StatPill>12 Cases</StatPill>
-                <StatPill>2 Minutes</StatPill>
+                <StatPill>15 Cases</StatPill>
+                <StatPill>3 Minutes</StatPill>
                 <StatPill>One Leaderboard</StatPill>
               </div>
               <Button className="mt-10" onClick={startChallenge}>

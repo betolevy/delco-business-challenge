@@ -1,10 +1,10 @@
 import type { Question } from "@/lib/types";
 
 /**
- * The 12 Business Challenge cases (3 per section). Content lives here as
- * the source of truth; edit via the Admin panel in production (writes go
- * to the store, not this file) — this is just what a fresh environment
- * starts from.
+ * The 15 Business Challenge cases, laid out 4/4/3/4 across the four
+ * sections. Content lives here as the source of truth; edit via the Admin
+ * panel in production (writes go to the store, not this file) — this is
+ * just what a fresh environment starts from.
  *
  * Wrong options are written to be plausible, not absurd — each one is a
  * real misconception a founder might actually hold, so picking the right
@@ -46,7 +46,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "Debió registrar primero el logo." },
     ],
     correctOptionId: "c",
-    explanation: "Comprar un dominio (o ser el primero en usar la marca) es importante, pero no reemplaza el registro formal de la marca.",
+    explanation:
+      "Comprar un dominio (o ser el primero en usar la marca) es importante, pero no reemplaza el registro formal de la marca.",
   },
   {
     id: "q3",
@@ -64,29 +65,50 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "El gerente general podrá romper el empate por decreto." },
     ],
     correctOptionId: "c",
-    explanation: "Un 50/50 no tiene un desempate natural. Los mejores acuerdos entre socios se firman cuando todavía existe confianza.",
+    explanation:
+      "Un 50/50 no tiene un desempate natural. Los mejores acuerdos entre socios se firman cuando todavía existe confianza.",
   },
   {
     id: "q4",
     order: 4,
-    section: "MAKE THE DEAL",
-    sectionEmoji: "🤝",
-    caseTitle: "The Standard Contract",
+    section: "BUILD A BUSINESS",
+    sectionEmoji: "🚀",
+    caseTitle: "The Dilution",
     scenario:
-      'Un cliente te envía un contrato diciendo: "No te preocupes. Es el mismo contrato que firmamos con todos nuestros clientes."',
-    prompt: "¿Qué sería un error asumir?",
+      "Un fundador tiene el 60% de su empresa. Entra un inversionista y se emiten acciones nuevas. Después de la ronda tiene 45% — aunque nunca vendió una sola acción.",
+    prompt: "¿Qué ocurrió?",
     options: [
-      { id: "a", label: "Que las cláusulas \"estándar\" no se pueden modificar." },
-      { id: "b", label: "Que tendrá errores." },
-      { id: "c", label: "Que ese contrato también protege tus intereses." },
-      { id: "d", label: "Que un abogado neutral ya lo revisó por ambas partes." },
+      { id: "a", label: "Su participación se diluyó al emitirse acciones nuevas." },
+      { id: "b", label: "Alguien le transfirió acciones al inversionista sin avisarle." },
+      { id: "c", label: "Perdió acciones por no participar en la junta." },
+      { id: "d", label: "El valor de sus acciones bajó en la misma proporción." },
     ],
-    correctOptionId: "c",
-    explanation: 'Las cláusulas "estándar" suelen ser precisamente donde se distribuyen los riesgos — y casi siempre se pueden negociar.',
+    correctOptionId: "a",
+    explanation:
+      "Emitir acciones nuevas reparte la empresa entre más participaciones: el porcentaje baja aunque el fundador conserve exactamente las mismas acciones. No es necesariamente malo — 45% de una empresa más valiosa puede valer mucho más que el 60% anterior — pero sí cambia el control, y por eso se negocia antes, no después.",
   },
   {
     id: "q5",
     order: 5,
+    section: "MAKE THE DEAL",
+    sectionEmoji: "🤝",
+    caseTitle: "The Fine Print",
+    scenario:
+      "Una empresa joven firma el arrendamiento de su primera oficina. En la última página, el dueño del local pide que el fundador firme también como fiador.",
+    prompt: "¿Qué implica realmente esa firma adicional?",
+    options: [
+      { id: "a", label: "Solo confirma que leyó el contrato." },
+      { id: "b", label: "Que el fundador responde con su patrimonio personal si la empresa no paga." },
+      { id: "c", label: "Que el fundador queda como representante legal de la empresa." },
+      { id: "d", label: "Que el contrato adquiere validez ante notario." },
+    ],
+    correctOptionId: "b",
+    explanation:
+      "La garantía personal atraviesa la protección que da la sociedad. Es de las cláusulas que más se firman sin dimensionar: si la empresa falla, el patrimonio del socio queda expuesto.",
+  },
+  {
+    id: "q6",
+    order: 6,
     section: "MAKE THE DEAL",
     sectionEmoji: "🤝",
     caseTitle: "The Surprise",
@@ -94,17 +116,18 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Una empresa está a punto de ser vendida. Durante la revisión aparece una demanda millonaria que nadie había mencionado.",
     prompt: "¿Qué proceso existe precisamente para descubrir estos riesgos antes del cierre?",
     options: [
-      { id: "a", label: "Auditoría financiera." },
-      { id: "b", label: "Junta Directiva." },
-      { id: "c", label: "Due Diligence." },
-      { id: "d", label: "Registro Público." },
+      { id: "a", label: "Un Due Diligence." },
+      { id: "b", label: "Una auditoría financiera de los últimos años." },
+      { id: "c", label: "Una búsqueda de gravámenes en el Registro Público." },
+      { id: "d", label: "Un certificado de buen estado (good standing) de la sociedad." },
     ],
-    correctOptionId: "c",
-    explanation: "Un buen Due Diligence va más allá de los números o los registros públicos — busca reducir sorpresas antes de invertir.",
+    correctOptionId: "a",
+    explanation:
+      "Una auditoría revisa números; el Registro Público revela gravámenes inscritos; el good standing solo confirma que la sociedad está vigente. El Due Diligence es el único que abarca contratos, permisos y litigios — donde suelen esconderse las sorpresas.",
   },
   {
-    id: "q6",
-    order: 6,
+    id: "q7",
+    order: 7,
     section: "MAKE THE DEAL",
     sectionEmoji: "🤝",
     caseTitle: "The Million-Dollar Email",
@@ -118,11 +141,31 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "Solo es válido si tiene firma digital." },
     ],
     correctOptionId: "c",
-    explanation: "Hoy muchas negociaciones se documentan electrónicamente. El contexto (y lo que se dijo antes) importa más que el formato.",
+    explanation:
+      "Hoy muchas negociaciones se documentan electrónicamente. El contexto (y lo que se dijo antes) importa más que el formato.",
   },
   {
-    id: "q7",
-    order: 7,
+    id: "q8",
+    order: 8,
+    section: "MAKE THE DEAL",
+    sectionEmoji: "🤝",
+    caseTitle: "The Renewal",
+    scenario:
+      "El contrato con un proveedor se renueva automáticamente cada año, salvo que se avise con 90 días de anticipación. La empresa avisa que no quiere renovar 30 días antes del vencimiento.",
+    prompt: "¿Cuál es la situación más probable?",
+    options: [
+      { id: "a", label: "El contrato termina igual, porque avisó antes del vencimiento." },
+      { id: "b", label: "El contrato queda renovado por un período más." },
+      { id: "c", label: "El contrato termina, pero con una penalidad menor." },
+      { id: "d", label: "El aviso obliga a renegociar las condiciones." },
+    ],
+    correctOptionId: "b",
+    explanation:
+      "En una renovación automática lo que manda es la ventana de preaviso, no la fecha de vencimiento. Avisar tarde equivale a no avisar. Vale la pena calendarizar esas fechas el día que se firma, no el día que se quiere salir.",
+  },
+  {
+    id: "q9",
+    order: 9,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The Developer",
@@ -140,25 +183,26 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "Pagar por el desarrollo no transfiere automáticamente la propiedad del código — se necesita un acuerdo escrito de cesión de derechos. El software suele ser uno de los activos más valiosos de una empresa.",
   },
   {
-    id: "q8",
-    order: 8,
+    id: "q10",
+    order: 10,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The AI Assistant",
     scenario: "Una empresa usa inteligencia artificial para preparar todos sus contratos sin revisarlos.",
     prompt: "¿Cuál es el riesgo más importante?",
     options: [
-      { id: "a", label: "Que no cumplan con el formato exigido por las autoridades locales." },
-      { id: "b", label: "Que tarden más en generarse que si los redactara un abogado." },
-      { id: "c", label: "Que no puedan firmarse electrónicamente." },
-      { id: "d", label: "Que no reflejen correctamente el negocio que quieren proteger." },
+      { id: "a", label: "Que el texto suene genérico o poco profesional." },
+      { id: "b", label: "Que el modelo no esté actualizado a la última reforma legal." },
+      { id: "c", label: "Que nadie haya evaluado los riesgos propios de esa operación." },
+      { id: "d", label: "Que el documento sea más largo de lo necesario." },
     ],
-    correctOptionId: "d",
-    explanation: "La IA ayuda mucho a redactar más rápido, pero cada operación tiene riesgos propios que un modelo genérico puede pasar por alto sin revisión humana.",
+    correctOptionId: "c",
+    explanation:
+      "La IA redacta rápido y puede sonar impecable, pero trabaja sobre patrones generales. Sin alguien que entienda el negocio concreto, el contrato puede estar bien escrito y aun así no proteger lo que importa.",
   },
   {
-    id: "q9",
-    order: 9,
+    id: "q11",
+    order: 11,
     section: "OWN YOUR IDEAS",
     sectionEmoji: "💡",
     caseTitle: "The Early Exit",
@@ -176,8 +220,8 @@ export const DEFAULT_QUESTIONS: Question[] = [
       "El vesting hace que las acciones se ganen gradualmente con el tiempo, protegiendo a la empresa si un socio se va temprano.",
   },
   {
-    id: "q10",
-    order: 10,
+    id: "q12",
+    order: 12,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Competitor",
@@ -190,11 +234,12 @@ export const DEFAULT_QUESTIONS: Question[] = [
       { id: "d", label: "Cláusula de exclusividad." },
     ],
     correctOptionId: "c",
-    explanation: "El derecho de preferencia permite que los socios existentes tengan la primera oportunidad de comprar, antes de que entre un tercero.",
+    explanation:
+      "El derecho de preferencia permite que los socios existentes tengan la primera oportunidad de comprar, antes de que entre un tercero.",
   },
   {
-    id: "q11",
-    order: 11,
+    id: "q13",
+    order: 13,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Expansion",
@@ -203,15 +248,35 @@ export const DEFAULT_QUESTIONS: Question[] = [
     options: [
       { id: "a", label: "Si necesitan constituir una nueva sociedad en cada país para poder usar la marca." },
       { id: "b", label: "Si deben traducir el nombre de la marca a cada idioma local." },
-      { id: "c", label: "Si la marca puede protegerse en esos países." },
-      { id: "d", label: "El costo de registrar la sociedad." },
+      { id: "c", label: "El costo de registrar la sociedad." },
+      { id: "d", label: "Si la marca puede protegerse en esos países." },
     ],
-    correctOptionId: "c",
-    explanation: "Una marca disponible en un país puede pertenecer a otra empresa en otro — el registro de marca es territorial, no automático.",
+    correctOptionId: "d",
+    explanation:
+      "Una marca disponible en un país puede pertenecer a otra empresa en otro — el registro de marca es territorial, no automático.",
   },
   {
-    id: "q12",
-    order: 12,
+    id: "q14",
+    order: 14,
+    section: "PROTECT YOUR COMPANY",
+    sectionEmoji: "🛡️",
+    caseTitle: "The Contractor",
+    scenario:
+      'Una empresa contrata a una persona "por servicios profesionales". Le fija horario, le da equipo, le asigna un supervisor, y trabaja solo para ellos desde hace tres años.',
+    prompt: "¿Cuál es el mayor riesgo para la empresa?",
+    options: [
+      { id: "a", label: "Que la relación sea considerada laboral, con todo lo que eso implica." },
+      { id: "b", label: "Que pueda renunciar sin previo aviso." },
+      { id: "c", label: "Que deba registrarse como proveedor ante la autoridad tributaria." },
+      { id: "d", label: "Que el contrato deba renovarse cada año." },
+    ],
+    correctOptionId: "a",
+    explanation:
+      "Lo que define una relación laboral no es el nombre del contrato, sino cómo funciona en la práctica: subordinación, horario, herramientas, exclusividad. Reclasificarla después sale mucho más caro que estructurarla bien desde el inicio.",
+  },
+  {
+    id: "q15",
+    order: 15,
     section: "PROTECT YOUR COMPANY",
     sectionEmoji: "🛡️",
     caseTitle: "The Structure",

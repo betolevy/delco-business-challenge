@@ -1,6 +1,6 @@
 # Business Challenge — delco
 
-A kiosk-friendly PWA for Penta Summit: a 12-case business-decision simulation with a
+A phone-first PWA for Penta Summit: a 15-case business-decision simulation with a
 hidden score (revealed only at the end), a tier badge, an end-of-quiz recap, a
 leaderboard, and a hidden admin panel — built with Next.js, Tailwind, and Framer Motion.
 
@@ -78,14 +78,14 @@ Questions and leaderboard entries live behind `src/lib/store.ts`:
 **Before the event, add Vercel KV (or point these env vars at an Upstash Redis
 database) so leaderboard entries actually persist.**
 
-## Editing the 12 cases
+## Editing the 15 cases
 
 The real cases ship in `src/data/questions.default.ts` — edit them from the Admin panel
 (`/admin` → Questions tab) instead: each case has an emoji + section, case title,
 scenario, question, options, correct answer, and an explanation (shown in the recap, not
 during play). No redeploy needed; changes write straight to the store above.
 
-Score tiers assume 12 questions total (see the ratio thresholds in `src/lib/tiers.ts`) —
+Score tiers assume 15 questions total (see the ratio thresholds in `src/lib/tiers.ts`) —
 update those if the case count changes materially.
 
 ## Brand assets
