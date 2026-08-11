@@ -1,7 +1,19 @@
 import { nanoid } from "nanoid";
 import type { Question, LeaderboardEntry } from "@/lib/types";
 import { DEFAULT_QUESTIONS } from "@/data/questions.default";
-import { kvConfigured, kvGet, kvSet, kvSadd, kvSmembers, kvZadd, kvZrevrange, kvMget } from "@/lib/kv";
+import {
+  kvConfigured,
+  kvGet,
+  kvSet,
+  kvSadd,
+  kvSmembers,
+  kvZadd,
+  kvZrevrange,
+  kvMget,
+  kvDel,
+  kvSrem,
+  kvZrem,
+} from "@/lib/kv";
 
 const DATA_DIR = `${process.cwd()}/.data`;
 const DB_FILE = `${DATA_DIR}/db.json`;
@@ -101,6 +113,47 @@ export async function getAllEntries(): Promise<LeaderboardEntry[]> {
   return [...db.entries].sort(
     (a, b) => rankScore(b.score, b.timeMs) - rankScore(a.score, a.timeMs)
   );
+}
+
+/**
+ * Moderation: pull a single entry off the board. Needed live at the event —
+ * a joke or offensive name would otherwise sit on the booth screen with no
+ * way to remove it.
+ */
+export async function deleteLeaderboardEntry(id: string): Promise<boolean> {
+  if (kvConfigured) {
+    const existing = await kvGet(`entry:${id}`);
+    if (!existing) return false;
+    await kvDel(`entry:${id}`);
+    await kvSrem("entries:ids", id);
+    await kvZrem("leaderboard", id);
+    return true;
+  }
+
+  const db = await readLocalDb();
+  const before = db.entries.length;
+  db.entries = db.entries.filter((e) => e.id !== id);
+  if (db.entries.length === before) return false;
+  await writeLocalDb(db);
+  return true;
+}
+
+/** Wipes every entry — for clearing test data before the event opens. */
+export async function clearLeaderboard(): Promise<number> {
+  if (kvConfigured) {
+    const ids = await kvSmembers("entries:ids");
+    if (ids.length > 0) {
+      await kvDel(...ids.map((id) => `entry:${id}`));
+    }
+    await kvDel("entries:ids", "leaderboard");
+    return ids.length;
+  }
+
+  const db = await readLocalDb();
+  const count = db.entries.length;
+  db.entries = [];
+  await writeLocalDb(db);
+  return count;
 }
 
 export async function computePercentile(score: number): Promise<number> {

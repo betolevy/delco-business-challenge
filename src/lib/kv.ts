@@ -64,3 +64,16 @@ export async function kvMget(keys: string[]): Promise<(string | null)[]> {
   const [result] = await pipeline([["MGET", ...keys]]);
   return (result as (string | null)[]) ?? [];
 }
+
+export async function kvDel(...keys: string[]): Promise<void> {
+  if (keys.length === 0) return;
+  await pipeline([["DEL", ...keys]]);
+}
+
+export async function kvSrem(key: string, member: string): Promise<void> {
+  await pipeline([["SREM", key, member]]);
+}
+
+export async function kvZrem(key: string, member: string): Promise<void> {
+  await pipeline([["ZREM", key, member]]);
+}

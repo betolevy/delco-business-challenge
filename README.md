@@ -88,6 +88,17 @@ during play). No redeploy needed; changes write straight to the store above.
 Score tiers assume 15 questions total (see the ratio thresholds in `src/lib/tiers.ts`) —
 update those if the case count changes materially.
 
+## Moderating the leaderboard
+
+`/admin` → Results tab. Every row has an `✕` to remove that entry — the board is
+projected on the booth screen, so a joke or offensive name needs to be removable on the
+spot. "Clear leaderboard" wipes everything (for clearing test data before doors open);
+it's behind an in-app confirmation, and the API additionally refuses the request unless
+the body carries `{"confirm": "DELETE ALL"}`, so a stray request can't nuke the event.
+
+Export the CSV before clearing — deletion is permanent and takes the captured emails
+with it.
+
 ## Brand assets
 
 `src/components/Logo.tsx` and `public/logo/*.svg` hold the real delco wordmark, extracted
