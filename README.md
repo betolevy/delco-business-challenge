@@ -18,8 +18,8 @@ Open http://localhost:3000. `/challenge` is the quiz, `/leaderboard` is public,
 ## The experience
 
 1. **Home (`/`)** — splash screen: logo, "Business Challenge", tagline, tap anywhere to
-   continue. Also shows a QR code (desktop/tablet only) so bystanders can scan and play
-   on their phone while the kiosk is in use.
+   continue. This is where the printed QR code lands, so it doubles as the brand moment.
+   On desktop/tablet it also renders its own QR for anyone watching over a shoulder.
 2. **Cover (`/challenge`, first screen)** — case count, time estimate, "Start Challenge".
 3. **Cases** — one full-screen case at a time: section badge (e.g. 🚀 BUILD A BUSINESS),
    case title, a short scenario, the question, and options. Selecting an option advances
@@ -32,6 +32,20 @@ Open http://localhost:3000. `/challenge` is the quiz, `/leaderboard` is public,
 6. **Join Leaderboard** — name / company / email, styled as an app step, not a form.
    Submitting also emails the player their score, tier, and full case-by-case recap
    (best-effort — see Email below).
+
+A run in progress is saved to `localStorage` (`src/lib/progress.ts`) and resumed on
+reload, since phones drop backgrounded tabs. Saved runs expire after 2h and are
+discarded if the case set changed underneath them.
+
+## Event setup
+
+- **Signage** — the QR on the table tents points at the production root URL. Regenerate
+  the print assets with `QR_URL=<url> node scripts/generate-qr.mjs` (writes PNGs plus an
+  SVG to `qr/`, which is gitignored — they're build output, not source).
+- **Booth screen (`/display`)** — a leaderboard built to be read from across the room:
+  viewport-scaled type, 6s auto-refresh, animated rank changes, and a join QR on screen.
+  Open it fullscreen (F11) on whatever drives the TV — a laptop over HDMI, a smart TV's
+  own browser, or a cast stick. It never needs interaction once loaded.
 
 ## Environment variables
 

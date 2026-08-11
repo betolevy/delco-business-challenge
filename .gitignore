@@ -40,6 +40,9 @@ yarn-error.log*
 # local dev data store (fallback when Vercel KV isn't configured)
 /.data
 
+# generated print assets (rebuild with scripts/generate-qr.mjs)
+/qr
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

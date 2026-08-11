@@ -3,7 +3,7 @@ import type { RecapItem } from "@/lib/scoring";
 import type { Tier } from "@/lib/tiers";
 
 const FROM = process.env.RESEND_FROM_EMAIL ?? "info@delcolaw.com";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://legal-challenge-zeta.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://delco-business-challenge.vercel.app";
 
 export const emailConfigured = Boolean(process.env.RESEND_API_KEY);
 
