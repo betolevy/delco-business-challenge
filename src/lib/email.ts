@@ -1,4 +1,3 @@
-import { Resend } from "resend";
 import type { RecapItem } from "@/lib/scoring";
 import type { Tier } from "@/lib/tiers";
 
@@ -56,6 +55,9 @@ export async function sendResultsEmail(params: {
 }): Promise<void> {
   if (!emailConfigured) return;
 
+  // Loaded on demand so the SDK stays out of the /api/submit bundle while
+  // email is switched off — submit is the hottest path at the event.
+  const { Resend } = await import("resend");
   const resend = new Resend(process.env.RESEND_API_KEY);
   const { to, name, score, totalQuestions, percentile, tier, recap } = params;
 

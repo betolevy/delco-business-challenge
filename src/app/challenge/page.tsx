@@ -15,6 +15,7 @@ import type { PublicQuestion } from "@/lib/types";
 import type { RecapItem } from "@/lib/scoring";
 import type { Tier } from "@/lib/tiers";
 import { saveProgress, loadProgress, clearProgress, matchesQuestionSet } from "@/lib/progress";
+import { saveResult, loadResult } from "@/lib/results-store";
 
 type Answer = { questionId: string; optionId: string };
 type Phase = "cover" | "loading" | "playing" | "scoring" | "result" | "recap" | "join" | "done";
@@ -38,6 +39,14 @@ export default function ChallengePage() {
   const [index, setIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [result, setResult] = useState<ScoreResult | null>(null);
+  // A previously finished run, offered on the cover screen. There is no
+  // results email, so this is the only way back to the recap.
+  const [priorResult] = useState(() =>
+    typeof window !== "undefined" ? loadResult() : null
+  );
+  // Reviewing an old run must not lead back into the join step — the
+  // answers aren't in memory anymore, and they already had their turn.
+  const [reviewingOnly, setReviewingOnly] = useState(false);
 
   const answersRef = useRef<Answer[]>([]);
   const startedAtRef = useRef<number>(0);
@@ -80,8 +89,24 @@ export default function ChallengePage() {
     startedAtRef.current = Date.now();
     answersRef.current = [];
     clearProgress();
+    // The stored result is left alone until this run actually finishes, so
+    // abandoning a replay doesn't destroy the recap they already earned.
+    setReviewingOnly(false);
     setIndex(0);
     setPhase("playing");
+  }
+
+  function viewPriorResult() {
+    if (!priorResult) return;
+    setReviewingOnly(true);
+    setResult({
+      score: priorResult.score,
+      totalQuestions: priorResult.totalQuestions,
+      percentile: priorResult.percentile,
+      tier: priorResult.tier,
+      recap: priorResult.recap,
+    });
+    setPhase("result");
   }
 
   const current = questions[index];
@@ -121,6 +146,7 @@ export default function ChallengePage() {
     });
     const data: ScoreResult = await res.json();
     setResult(data);
+    saveResult(data);
     setPhase("result");
   }
 
@@ -193,8 +219,21 @@ export default function ChallengePage() {
                 <StatPill>One Leaderboard</StatPill>
               </div>
               <Button className="mt-10" onClick={startChallenge}>
-                Start Challenge
+                {priorResult ? "Play again" : "Start Challenge"}
               </Button>
+
+              {priorResult && (
+                <button
+                  onClick={viewPriorResult}
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-teal/40 px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-teal/10 cursor-pointer"
+                >
+                  <span>{priorResult.tier.emoji}</span>
+                  <span>
+                    View my results · {priorResult.score}/{priorResult.totalQuestions}
+                  </span>
+                </button>
+              )}
+
               <button
                 onClick={() => router.push("/leaderboard")}
                 className="mt-6 text-[13px] font-medium text-fg-subtle hover:text-white cursor-pointer"
@@ -279,9 +318,19 @@ export default function ChallengePage() {
                 Case by case
               </h2>
               <RecapList items={result.recap} />
-              <Button className="mt-8 mb-4 w-full" onClick={() => setPhase("join")}>
-                Continue
-              </Button>
+
+              {reviewingOnly ? (
+                <div className="mt-8 mb-4 flex w-full flex-col gap-3">
+                  <Button onClick={() => router.push("/leaderboard")}>View Leaderboard</Button>
+                  <Button variant="ghost" onClick={startChallenge}>
+                    Play again
+                  </Button>
+                </div>
+              ) : (
+                <Button className="mt-8 mb-4 w-full" onClick={() => setPhase("join")}>
+                  Continue
+                </Button>
+              )}
             </motion.div>
           )}
 
@@ -318,10 +367,21 @@ export default function ChallengePage() {
               <p className="mt-2 max-w-xs text-[15px] text-fg-muted">
                 Thanks for playing. Good luck!
               </p>
+              <p className="mt-4 max-w-xs text-[13px] text-fg-subtle">
+                Save this link — you can come back anytime to review all 15 cases and their
+                explanations.
+              </p>
               <div className="mt-9 flex flex-col gap-3">
                 <Button onClick={() => router.push("/leaderboard")}>View Leaderboard</Button>
-                <Button variant="ghost" onClick={() => router.push("/")}>
-                  Back to Home
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    // Already joined — going back must not offer the form again.
+                    setReviewingOnly(true);
+                    setPhase("recap");
+                  }}
+                >
+                  View my results
                 </Button>
               </div>
             </motion.div>
